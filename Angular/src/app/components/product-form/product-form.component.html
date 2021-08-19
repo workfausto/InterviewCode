@@ -1,0 +1,72 @@
+<div id="form_modal" class="modal fade " role="dialog">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+       <div class="modal-content">
+          <form (ngSubmit)="onSubmit(form)" #form="ngForm">
+             <div class="modal-header">
+                <h5 class="modal-title">{{isEditing?"Update":"Create"}} product</h5>
+             </div>
+             <div class="modal-body">
+                <div class="form-group spaced" >
+                    <label>Name:</label>
+                    <input [(ngModel)]="formData.Name" type="text" class="form-control" name="Name" minlength="1" maxlength="50" #Name="ngModel" required>
+                    <div class="error" *ngIf="Name.invalid && (Name.dirty || Name.touched)">
+                        <div *ngIf="Name.errors?.required">
+                            A name is required.
+                        </div>
+                        <div *ngIf="Name.errors?.minlength">
+                            The name must be at least 1 characters long.
+                        </div>
+                        <div *ngIf="Name.errors?.maxlength">
+                            The name must be at most 50 characters long.
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group col-md-5 spaced" >
+                    <label>Price:</label>
+                    <input [(ngModel)]="formData.Price" type="number" class="form-control" name="Price" #Price="ngModel" required>
+                    <div class="error" *ngIf="!validPrice && (Price.dirty || Price.touched)">
+                        <div *ngIf="!formData.Price">
+                            A price is required.
+                        </div>
+                        <div *ngIf="!validPrice && formData.Price">
+                            The price has to be between 1 and 1000
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group spaced" >
+                    <label>Company:</label>
+                    <input [(ngModel)]="formData.Company" type="Company" minlength="1" maxlength="50" class="form-control" name="Company" #Company="ngModel" required>
+                    <div class="error" *ngIf="Company.invalid && (Company.dirty || Company.touched)">
+                        <div *ngIf="Company.errors?.required">
+                            A Company name is required.
+                        </div>
+                        <div *ngIf="Company.errors?.minlength">
+                            The Company name must be at least 1 characters long.
+                        </div>
+                        <div *ngIf="Company.errors?.maxlength">
+                            The Company name must be at most 50 characters long.
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group col-md-5 spaced" >
+                    <label>Maximum Age:</label>
+                    <input [(ngModel)]="formData.AgeRestriction" type="number" class="form-control" #AgeRestriction="ngModel" ng-model="formData.AgeRestriction" name="AgeRestriction">
+                    <div class="error" *ngIf="!validAge && (AgeRestriction.dirty || AgeRestriction.touched)">
+                        <div *ngIf="!validAge">
+                            The Maximum age when defined must be between 0 and 100.
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group spaced" >
+                    <label>Description:</label>
+                    <textarea class="form-control" [(ngModel)]="formData.Description" name="Description" rows="3"></textarea>
+                </div>
+             </div>
+             <div class="modal-footer">
+                <button type="submit" *ngIf="form.valid && validPrice && validAge" class="btn btn-outline-primary"> Save</button>
+                <button type="button" class="btn btn-outline-danger" (click)="dismissModal()" >Cancel</button>
+             </div>
+          </form>
+       </div>
+    </div>
+ </div>
